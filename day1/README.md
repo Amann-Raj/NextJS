@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js Learning — Day 1 🚀  
+### Setup + App Router + Routing + Layout + Navbar (Beginner Friendly)
 
-## Getting Started
+This repository contains my **Day 1 learning** of **Next.js (App Router)** where I learned how routing works automatically, how `layout.js` wraps pages, and how to create multi-page navigation using `next/link`.
 
-First, run the development server:
+---
+
+## 🧠 Why Next.js? (React vs Next.js)
+React is a UI library, but for a complete real-world application we usually need:
+
+- routing
+- SEO
+- performance optimizations
+- deployment-friendly setup
+- sometimes backend APIs
+
+### ✅ React
+- Only focuses on UI
+- Routing requires extra library (`react-router-dom`)
+- Mostly Client Side Rendering (CSR) → SEO not great for content-heavy websites
+
+### ✅ Next.js
+Next.js is a **framework built on top of React** that provides:
+
+- File/Folder based routing (no extra router)
+- Server Side Rendering (SSR)
+- Static Site Generation (SSG)
+- API Routes (backend inside Next.js)
+- Faster page loading and prefetching
+- Very easy deployment (Vercel)
+
+---
+
+## ✅ Day 1 Goals
+By the end of Day 1, I learned:
+
+- How to create a Next.js project
+- Understanding Next.js folder structure (App Router)
+- Creating pages using `page.js`
+- Automatic routing system (folder-based routing)
+- Creating a reusable `Navbar`
+- Using `layout.js` for common UI layout
+- Navigation using `<Link />`
+- How routing works internally in Next.js
+
+---
+
+## 📌 What is Next.js?
+**Next.js** is a **React Framework** that adds extra superpowers to React:
+
+- ✅ Built-in routing
+- ✅ SEO friendly (SSR/SSG support)
+- ✅ Fullstack capability (API Routes)
+- ✅ Faster performance & optimized builds
+- ✅ Better developer experience with structured file system
+
+---
+
+## 🧩 What is App Router?
+Next.js 13+ introduced a modern routing system called **App Router**.
+
+📌 App Router means:
+- Routing is controlled by the `app/` folder
+- Each route is represented using a folder
+- `page.js` is the route entry file
+- `layout.js` is shared UI wrapper
+- supports modern features like Server Components
+
+---
+
+## ⚙️ Step 1: Create Next.js Project
+Run the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+npx create-next-app@latest nextjs-day1

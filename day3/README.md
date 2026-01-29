@@ -1,0 +1,274 @@
+# Next.js Day 3 — Loading, Error, Not Found + Nested Layouts + Nested Routes (Detailed Notes)
+
+This README covers everything learned in **Day 3 of Next.js** using **App Router**:
+- Nested Layouts (`layout.js` inside routes)
+- Route Loading UI (`loading.js`)
+- Custom 404 handling (`not-found.js` + `notFound()`)
+- Error Handling / Error Boundary (`error.js`)
+- Nested Dynamic Routes (`/blogs/[id]/comments`)
+- Dynamic SEO (`generateMetadata()`)
+
+---
+
+## ✅ 1) What we built in Day 3?
+
+We built a mini blog system which behaves like a real application.
+
+### Routes built:
+- `/` → Home page
+- `/blogs` → Blogs listing page
+- `/blogs/1` → Blog details page (dynamic route)
+- `/blogs/1/comments` → Nested comments page (nested dynamic route)
+
+### Features added:
+- Blog section has its own sidebar (nested layout)
+- Blog routes show custom loaders (loading UI)
+- Invalid blog ID shows custom 404 page
+- Errors inside blogs section show custom error UI
+- Blog title/SEO changes dynamically using metadata
+
+---
+
+## ✅ 2) Next.js Layout System (Root Layout vs Nested Layout)
+
+### Root Layout (Global)
+Next.js has a global layout file:
+- `app/layout.js`
+
+This layout is applied to **all pages** in the application.
+
+It is useful for:
+- global navbar/footer
+- global CSS
+- page wrappers
+
+---
+
+### Nested Layout (Route-Level Layout)
+We created a separate layout inside:
+- `app/blogs/layout.js`
+
+This layout applies **ONLY** to:
+- `/blogs`
+- `/blogs/[id]`
+- `/blogs/[id]/comments`
+- and any route inside `blogs/`
+
+#### Why nested layouts are powerful?
+Because they allow:
+- route-specific UI (like dashboards, admin panels)
+- sidebar layouts without repeating code
+- clean and scalable project structure
+
+---
+
+## ✅ 3) `loading.js` — Route Loading UI
+
+### What is `loading.js`?
+In App Router, Next.js supports route-level loading UI.
+
+If a route takes time to load (server-side rendering/data fetching), Next.js automatically shows:
+- `loading.js`
+
+Example:
+- `app/blogs/loading.js` runs whenever the `/blogs` route is loading
+
+---
+
+### Why is it useful?
+`loading.js` is helpful for:
+- showing skeleton loaders
+- better user experience
+- avoiding blank pages while data loads
+
+---
+
+### How it works internally?
+When user visits `/blogs`:
+1. Next.js begins rendering the blogs route
+2. It shows `blogs/loading.js` immediately
+3. Once blogs page is ready, loading UI is replaced automatically with actual page
+
+---
+
+## ✅ 4) `notFound()` + `not-found.js` — Custom 404 for Routes
+
+### Problem
+In dynamic routes like `/blogs/[id]`, user can type:
+- `/blogs/100` (invalid blog)
+
+So we must show 404 UI.
+
+---
+
+### Solution: `notFound()`
+Inside the dynamic blog details page:
+- if blog is not found in dataset,
+- call `notFound()`
+
+This triggers the Next.js Not Found boundary.
+
+---
+
+### Custom 404 UI: `not-found.js`
+By creating:
+- `app/blogs/not-found.js`
+
+We get a **custom 404 page only for blogs section**.
+
+This is very useful because:
+- user experience is better
+- error UI can be section-specific
+- you can provide navigation links like "Back to Blogs"
+
+---
+
+### How it works internally?
+1. `/blogs/100` is requested
+2. Route matches `blogs/[id]`
+3. Blog data lookup fails
+4. `notFound()` is triggered
+5. Next.js renders `blogs/not-found.js` UI
+
+---
+
+## ✅ 5) `error.js` — Error Boundary for a Route
+
+### What is `error.js`?
+`error.js` is a special file which acts like:
+✅ React Error Boundary (but route-level)
+
+If any page inside that route throws an error, Next.js shows `error.js` UI instead of crashing the whole app.
+
+---
+
+### Where we placed it?
+- `app/blogs/error.js`
+
+So errors inside `/blogs` section are handled.
+
+---
+
+### Why `error.js` must be a Client Component?
+Because it can include:
+- retry button
+- interaction
+- reset handler
+
+So it must start with:
+- `"use client"`
+
+---
+
+### What is `reset()`?
+The `reset()` function retries rendering the route again.
+
+Meaning:
+- if error was temporary (API down), user can click Try Again
+- route tries to re-render without refreshing full page
+
+---
+
+## ✅ 6) Nested Dynamic Routing (Multi-level dynamic routes)
+
+We learned nested routes like:
+- `/blogs/[id]/comments`
+
+This means:
+- first segment is a dynamic blog id
+- inside that blog, there is another page: comments
+
+---
+
+### Why nested dynamic routes are important?
+Because real apps are structured like:
+- `/products/[id]/reviews`
+- `/users/[id]/settings`
+- `/posts/[id]/comments`
+
+This structure improves:
+- SEO
+- clean architecture
+- maintainability
+
+---
+
+### How it works internally?
+Example:
+User opens `/blogs/2/comments`
+
+Next.js:
+1. matches `/blogs/[id]/comments`
+2. extracts `id = "2"`
+3. provides it via `params`
+4. renders the correct nested route
+
+---
+
+## ✅ 7) `generateMetadata()` — Dynamic SEO per page
+
+### What is metadata?
+Metadata is used for:
+- browser tab title
+- SEO description
+- OpenGraph tags (social previews)
+
+In Next.js App Router, we can generate metadata dynamically.
+
+---
+
+### Why do we need it?
+For dynamic routes:
+- `/blogs/1` should show title: `Blog 1`
+- `/blogs/2` should show title: `Blog 2`
+
+So each page becomes SEO-friendly.
+
+---
+
+### How it works?
+`generateMetadata()` runs before rendering page and sets:
+- title
+- description
+
+This makes Next.js powerful for:
+- blogs
+- products
+- SEO landing pages
+
+---
+
+## ✅ 8) Day 3 Summary
+
+You learned:
+✅ Nested layouts for sections  
+✅ Route-specific sidebar UI  
+✅ Loading UI using `loading.js`  
+✅ 404 handling using `notFound()`  
+✅ Custom section 404 UI using `not-found.js`  
+✅ Error handling using `error.js` with retry support  
+✅ Nested dynamic routes (`/blogs/[id]/comments`)  
+✅ Dynamic SEO using `generateMetadata()`  
+
+---
+
+## ✅ 9) Day 3 Tasks (Recommended practice)
+
+### Task 1:
+Remove forced error in comments page.
+Show a list of comments based on blog ID.
+
+### Task 2:
+Improve blogs sidebar UI:
+- highlight active route
+- add better spacing
+
+### Task 3:
+Improve `not-found.js` UI:
+- show button
+- show emoji / illustration
+- add link to home and blogs list
+
+---
+
+
